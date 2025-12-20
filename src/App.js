@@ -5,7 +5,8 @@ import ImageGallery from './components/ImageGallery/ImageGallery';
 import Button from './components/Button/Button';
 import Loader from './components/Loader/Loader';
 import Modal from './components/Modal/Modal';
-
+import { Grid } from '@giphy/react-components'
+import { GiphyFetch } from '@giphy/js-fetch-api'
 const apiKeying = '50977795-feb18de71b048a02e0c824e54';
 const perPageing = 100;
 
@@ -78,8 +79,12 @@ class App extends Component {
 
   render() {
     const { images, isLoading, showModal, largeImageURL, totalHits } = this.state;
-
-    const showLoadMore = images.length > 0 && images.length < totalHits;
+//https://api.giphy.com/v1/gifs/search?api_key=WemsHAqybTSXcE89mjSrOLhtxEpZG73K&q=travel&limit=10
+    const gf = new GiphyFetch('your api key')
+const fetchGifs = (offset: number) => gf.trending({ offset, limit: 10 })
+ReactDOM.render(<Grid width={800} columns={3} fetchGifs={fetchGifs} />, target)
+    
+const showLoadMore = images.length > 0 && images.length < totalHits;
 
     return (
       <div className="App">
